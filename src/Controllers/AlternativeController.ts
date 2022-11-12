@@ -1,17 +1,24 @@
 import { Alternative } from '../Models/Alternative';
 import { AppDataSource } from '../data-source';
 import { Request, Response } from 'express';
+import { Quiz } from '../Models/Quiz';
+import { Question } from '../Models/Question';
 
 const create = async (req: Request, res: Response) => {
   try {
     const alternative = new Alternative();
-    const { statement, isCorrect } = req.body;
+    const { statement, isCorrect, questionId } = req.body;
+    const question = await AppDataSource.manager.findOneBy(Question, {
+      id: Number(questionId)
+    })
+    if (!question) return res.json('Question not found').status(404)
     alternative.is_correct = isCorrect;
     alternative.statement = statement;
+    alternative.question = question;
     await AppDataSource.manager.save(alternative)
     return res.json(alternative).status(200)
   } catch (e) {
-    return res.json('fail').status(500)
+    return res.json(`error ${e.message}`).status(500)
   }
 }
 

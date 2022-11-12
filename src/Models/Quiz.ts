@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
-
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from "typeorm"
+import { Categories } from './Categories';
+import { Question } from './Question'
 @Entity()
 export class Quiz {
   @PrimaryGeneratedColumn()
@@ -7,4 +8,10 @@ export class Quiz {
 
   @Column()
   name: string
+
+  @OneToMany(() => Question, (question) => question.quiz)
+  questions: Question[]
+
+  @ManyToMany(() => Categories, (categories) => categories.quizes)
+  category: Categories
 }

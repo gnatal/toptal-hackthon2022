@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
-
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm"
+import { Question } from './Question'
 @Entity()
 export class Alternative {
   @PrimaryGeneratedColumn()
@@ -10,5 +10,8 @@ export class Alternative {
 
   @Column()
   is_correct: boolean
+
+  @ManyToOne(() => Question, (question) => question.alternatives)
+  question: Question
 
 }

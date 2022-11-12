@@ -1,12 +1,18 @@
 import { Question } from '../Models/Question';
 import { AppDataSource } from '../data-source';
 import { Request, Response } from 'express';
+import { Quiz } from '../Models/Quiz';
 
 const create = async (req: Request, res: Response) => {
   try {
     const question = new Question();
-    const { statement } = req.body;
+    const { statement, quizId } = req.body;
     question.statement = statement
+    const quiz = await AppDataSource.manager.findOneBy(Quiz, {
+      id: quizId
+    })
+    if (!quiz) return res.json('Quiz not found').status(404);
+    question.quiz = quiz;
     await AppDataSource.manager.save(question)
     return res.json(question).status(200)
   } catch (e) {
