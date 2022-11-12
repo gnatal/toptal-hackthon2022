@@ -5,8 +5,47 @@ import { Request, Response } from 'express';
 const create = async (req: Request, res: Response) => {
   try {
     const score = new Score();
-    // const { username } = req.body;
-    // user.username = username
+    // await AppDataSource.manager.save(user)
+    return res.json(score).status(200)
+  } catch (e) {
+    return res.json('fail').status(500)
+  }
+}
+
+const get = async (req: Request, res: Response) => {
+  try {
+    const score = new Score();
+    // await AppDataSource.manager.save(user)
+    return res.json(score).status(200)
+  } catch (e) {
+    return res.json('fail').status(500)
+  }
+}
+
+const getById = async (req: Request, res: Response) => {
+  try {
+    const score = new Score();
+    // await AppDataSource.manager.save(user)
+    return res.json(score).status(200)
+  } catch (e) {
+    return res.json('fail').status(500)
+  }
+}
+
+const update = async (req: Request, res: Response) => {
+  try {
+    const score = new Score();
+    // await AppDataSource.manager.save(user)
+    return res.json(score).status(200)
+  } catch (e) {
+    return res.json('fail').status(500)
+  }
+}
+
+
+const deleteById = async (req: Request, res: Response) => {
+  try {
+    const score = new Score();
     // await AppDataSource.manager.save(user)
     return res.json(score).status(200)
   } catch (e) {
@@ -15,5 +54,9 @@ const create = async (req: Request, res: Response) => {
 }
 
 export default {
-  create
+  create,
+  get,
+  getById,
+  update,
+  deleteById
 }
