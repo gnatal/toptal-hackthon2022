@@ -26,10 +26,10 @@ const get = async (req: Request, res: Response) => {
 const getById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
-    const alternative = await AppDataSource.manager.findOneBy(Categories, {
+    const category = await AppDataSource.manager.findOneBy(Categories, {
       id: Number(id)
     })
-    return res.json(alternative).status(200)
+    return res.json(category).status(200)
   } catch (e) {
     return res.json('fail').status(500)
   }

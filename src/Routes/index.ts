@@ -3,6 +3,8 @@ import UserController from '../Controllers/UserController';
 import ScoreController from '../Controllers/ScoreController';
 import QuizController from '../Controllers/QuizController';
 import AlternativeController from '../Controllers/AlternativeController';
+import QuestionController from '../Controllers/QuestionController';
+import CategoryController from '../Controllers/CategoryController';
 
 const routes = Router()
 
@@ -36,8 +38,27 @@ routes.get('/quiz/:id', QuizController.getById)
 routes.put('/quiz/:id', QuizController.update)
 routes.delete('/quiz/:id', QuizController.deleteById)
 
+// question routes
+routes.post('/question', QuestionController.create)
+routes.get('/question', QuestionController.get)
+routes.get('/question/:id', QuestionController.getById)
+routes.put('/question/:id', QuestionController.update)
+routes.delete('/question/:id', QuestionController.deleteById)
 
-routes.post('/quiz', QuizController.create)
+// question routes
+routes.post('/category', CategoryController.create)
+routes.get('/category', CategoryController.get)
+routes.get('/category/:id', CategoryController.getById)
+routes.put('/category/:id', CategoryController.update)
+routes.delete('/category/:id', CategoryController.deleteById)
+
+
+// Score routes
 routes.post('/score', ScoreController.create)
+routes.get('/score', ScoreController.get)
+routes.get('/score/:id', ScoreController.getById)
+routes.put('/score/:id', ScoreController.update)
+routes.delete('/score/:id', ScoreController.deleteById)
+
 
 export default routes

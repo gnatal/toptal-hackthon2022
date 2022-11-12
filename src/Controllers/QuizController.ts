@@ -5,9 +5,10 @@ import { Request, Response } from 'express';
 const create = async (req: Request, res: Response) => {
   try {
     const quiz = new Quiz();
-    // user.username = username
-    // await AppDataSource.manager.save(user)
-    return res.json(v).status(200)
+    const { name } = req.body;
+    quiz.name = name;
+    await AppDataSource.manager.save(quiz)
+    return res.json(quiz).status(200)
   } catch (e) {
     return res.json('fail').status(500)
   }
@@ -25,10 +26,11 @@ const get = async (req: Request, res: Response) => {
 
 const getById = async (req: Request, res: Response) => {
   try {
-    const quiz = new Quiz();
-    // user.username = username
-    // await AppDataSource.manager.save(user)
-    return res.json(v).status(200)
+    const { id } = req.params
+    const quizes = await AppDataSource.manager.findOneBy(Quiz, {
+      id: Number(id)
+    });
+    return res.json(quizes).status(200)
   } catch (e) {
     return res.json('fail').status(500)
   }
@@ -37,9 +39,14 @@ const getById = async (req: Request, res: Response) => {
 
 const update = async (req: Request, res: Response) => {
   try {
-    const quiz = new Quiz();
-    // user.username = username
-    // await AppDataSource.manager.save(user)
+    const { id } = req.params
+    const quiz = await AppDataSource.manager.findOneBy(Quiz, {
+      id: Number(id)
+    });
+    if (!quiz) return res.json('Not found').status(404)
+    const { name } = req.body;
+    quiz.name = name;
+    await AppDataSource.manager.update(Quiz, id, quiz)
     return res.json(quiz).status(200)
   } catch (e) {
     return res.json('fail').status(500)
@@ -49,10 +56,9 @@ const update = async (req: Request, res: Response) => {
 
 const deleteById = async (req: Request, res: Response) => {
   try {
-    const quiz = new Quiz();
-    // user.username = username
-    // await AppDataSource.manager.save(user)
-    return res.json(v).status(200)
+    const { id } = req.params
+    const deleted = await AppDataSource.manager.delete(Quiz, id)
+    return res.json(deleted).status(200)
   } catch (e) {
     return res.json('fail').status(500)
   }
