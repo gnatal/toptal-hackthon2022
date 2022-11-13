@@ -4,7 +4,7 @@ import { User } from './Models/User';
 import { Quiz } from './Models/Quiz';
 import { Question } from './Models/Question';
 import { Alternative } from './Models/Alternative';
-import { Score } from './Models/Score';
+import { QuizUser } from './Models/Score';
 import { Categories } from './Models/Categories';
 
 export const AppDataSource = new DataSource({
@@ -16,7 +16,7 @@ export const AppDataSource = new DataSource({
   database: "test",
   synchronize: true,
   logging: true,
-  entities: [User, Quiz, Categories, Alternative, Question, Score],
+  entities: [User, Quiz, Categories, Alternative, Question, QuizUser],
   subscribers: [],
   migrations: [],
 })

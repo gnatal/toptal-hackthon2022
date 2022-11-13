@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+  OneToMany
+} from "typeorm"
+import { QuizUser } from './Score'
 
 @Entity()
 export class User {
@@ -7,4 +15,7 @@ export class User {
 
   @Column()
   username: string
+
+  @OneToMany(() => QuizUser, (scoreGame) => scoreGame.user)
+  public score: QuizUser[]
 }
