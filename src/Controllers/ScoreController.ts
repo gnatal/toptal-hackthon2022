@@ -35,12 +35,19 @@ const get = async (req: Request, res: Response) => {
   }
 }
 
-const getById = async (req: Request, res: Response) => {
+const getUserScores = async (req: Request, res: Response) => {
   try {
-    const score = new QuizUser();
-    return res.json(score).status(200)
+    const { userId } = req.params;
+    const user = await AppDataSource.manager.findOneBy(User, {
+      id: Number(userId)
+    })
+    if (!user) return res.json('User not found').status(404)
+    const scores = await AppDataSource.manager.findOneBy(QuizUser, {
+      user: user
+    })
+    return res.json(scores).status(200)
   } catch (e) {
-    return res.json('fail').status(500)
+    return res.json(`Failed: ${e.message}`).status(500)
   }
 }
 
@@ -66,7 +73,7 @@ const deleteById = async (req: Request, res: Response) => {
 export default {
   create,
   get,
-  getById,
+  getUserScores,
   update,
   deleteById
 }

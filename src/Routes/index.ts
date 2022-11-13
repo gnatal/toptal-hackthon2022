@@ -56,7 +56,7 @@ routes.delete('/category/:id', CategoryController.deleteById)
 // Score routes
 routes.post('/score', ScoreController.create)
 routes.get('/score', ScoreController.get)
-routes.get('/score/:id', ScoreController.getById)
+routes.get('/score/:userId', ScoreController.getUserScores)
 routes.put('/score/:id', ScoreController.update)
 routes.delete('/score/:id', ScoreController.deleteById)
 
