@@ -28,8 +28,10 @@ const create = async (req: Request, res: Response) => {
 
 const get = async (req: Request, res: Response) => {
   try {
-    const score = new QuizUser();
-    return res.json(score).status(200)
+    const scores = await AppDataSource.manager.find(QuizUser, {
+      relations: ['user', 'quiz']
+    })
+    return res.json(scores).status(200)
   } catch (e) {
     return res.json('fail').status(500)
   }
@@ -42,8 +44,11 @@ const getUserScores = async (req: Request, res: Response) => {
       id: Number(userId)
     })
     if (!user) return res.json('User not found').status(404)
-    const scores = await AppDataSource.manager.findOneBy(QuizUser, {
-      user: user
+    const scores = await AppDataSource.manager.findOne(QuizUser, {
+      where: {
+        user: user
+      },
+      relations: ['quiz']
     })
     return res.json(scores).status(200)
   } catch (e) {

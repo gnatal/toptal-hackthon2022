@@ -22,7 +22,9 @@ const create = async (req: Request, res: Response) => {
 
 const get = async (req: Request, res: Response) => {
   try {
-    const questions = await AppDataSource.manager.find(Question)
+    const questions = await AppDataSource.manager.find(Question, {
+      relations: ['quiz']
+    })
     return res.json(questions).status(200)
   } catch (e) {
     return res.json(`fail ${e.message}`).status(500)
