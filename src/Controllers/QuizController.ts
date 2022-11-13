@@ -16,10 +16,12 @@ const create = async (req: Request, res: Response) => {
 
 const get = async (req: Request, res: Response) => {
   try {
-    const quizes = await AppDataSource.manager.find(Quiz);
+    const quizes = await AppDataSource.manager.find(Quiz, {
+      relations: ['questions']
+    });
     return res.json(quizes).status(200)
   } catch (e) {
-    return res.json('fail').status(500)
+    return res.json(`Failed: ${e.message}`).status(500)
   }
 }
 
@@ -27,10 +29,13 @@ const get = async (req: Request, res: Response) => {
 const getById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
-    const quizes = await AppDataSource.manager.findOneBy(Quiz, {
-      id: Number(id)
+    const quizes = await AppDataSource.manager.findOne(Quiz, {
+      where: {
+        id: Number(id)
+      },
+      relations: ['questions']
     });
-    return res.json(quizes).status(200)
+    return res.json({ quizes }).status(200)
   } catch (e) {
     return res.json('fail').status(500)
   }

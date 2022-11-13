@@ -23,7 +23,7 @@ const create = async (req: Request, res: Response) => {
 const get = async (req: Request, res: Response) => {
   try {
     const questions = await AppDataSource.manager.find(Question, {
-      relations: ['quiz']
+      relations: ['quiz', 'alternatives']
     })
     return res.json(questions).status(200)
   } catch (e) {
@@ -34,8 +34,11 @@ const get = async (req: Request, res: Response) => {
 const getById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
-    const question = await AppDataSource.manager.findOneBy(Question, {
-      id: Number(id)
+    const question = await AppDataSource.manager.findOne(Question, {
+      where: {
+        id: Number(id)
+      },
+      relations: ['quiz', 'alternatives']
     })
     return res.json(question).status(200)
   } catch (e) {
